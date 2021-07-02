@@ -29,29 +29,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _expresion='';
+  String _expression='';
   String _ans='';
   void click(String texto){
-    setState(()=> _expresion += texto);
+    setState(()=> _expression += texto);
   }
   void clear(String texto){
     setState((){
-      _expresion='';
+      _expression='';
     });
   }
   void allClear(String texto){
     setState((){
-      _expresion='';
+      _expression='';
       _ans='';
     });
   }
   void solucionar(String expr){
     Parser p = Parser();
-    Expression exp = p.parse(_expresion);
+    Expression exp = p.parse(_expression);
     ContextModel cm = ContextModel();
     setState(() {
         _ans = exp.evaluate(EvaluationType.REAL, cm).toString();
-        _expresion = '';
+        if(_ans.substring(_ans.length -2, _ans.length)==".0"){
+          _ans = _ans.substring(0, _ans.length-2);
+        }
+        _expression = '';
     });
   }
   @override
@@ -89,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: FittedBox(
                   alignment: Alignment.topRight,
                   child: Text(
-                    _expresion,
+                    _expression,
                     style: TextStyle(color: Colors.black, fontSize:40),
                   ),
                 )
@@ -106,87 +109,104 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-            Boton(
-              simbolo: "AC", colorFondo :0xDD000000, funcion:allClear
+            SingleButton
+              (
+               "AC", allClear,colorFondo :0xDD000000
             ),
-            Boton(
-              simbolo: "C", colorFondo :0xDD000000, funcion:clear
+            SingleButton
+              (
+              "C", clear, colorFondo :0xDD000000
             ),
-            Boton(
-              simbolo: "(", colorFondo :0xDD000000, funcion:click
+            SingleButton
+              (
+              "(",  click, colorFondo :0xDD000000,
             ),
-            Boton(
-              simbolo: ")", colorFondo :0xDD000000, funcion:click
+            SingleButton
+              (
+              ")",  click, colorFondo :0xDD000000,
             )
             ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Boton(
-                  simbolo: '1', funcion:click
+                SingleButton
+                  (
+                  '1', click
                 ),
-                Boton(
-                  simbolo: '2', funcion:click
+                SingleButton
+                  (
+                   '2', click
                 ),
-                Boton(
-                  simbolo: "3", funcion:click
+                SingleButton
+                  (
+                   "3", click
                 ),
-                Boton(
-                  simbolo: "+", colorFondo :0xDD000000, funcion:click
+                SingleButton
+                  (
+                   "+", click, colorFondo :0xDD000000
                 )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Boton(
-                  simbolo: '4',funcion:click
+                SingleButton
+                  (
+                   '4', click
                 ),
-                Boton(
-                  simbolo: '5',funcion:click
+                SingleButton
+                  (
+                   '5', click
                 ),
-                Boton(
-                  simbolo: "6",funcion:click
+                SingleButton
+                  (
+                   "6" , click
                 ),
-                Boton(
-                  simbolo: "-", colorFondo :0xDD000000, funcion:click
+                SingleButton
+                  (
+                   "-", click, colorFondo :0xDD000000
                 )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Boton(
-                  simbolo: '7', funcion:click
+                SingleButton
+                  (
+                   '7', click
                 ),
-                Boton(
-                  simbolo: '8', funcion:click
+                SingleButton
+                  (
+                   '8', click
                 ),
-                Boton(
-                  simbolo: "9", funcion:click
+                SingleButton
+                  (
+                   "9", click
                 ),
-                Boton(
-                  simbolo: "/", colorFondo :0xDD000000, funcion:click
+                SingleButton
+                  (
+                   "/",  click, colorFondo :0xDD000000
                 )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Boton(
-                  simbolo:"=",
-                  funcion:solucionar,
-                    colorFondo :0xAA000000,
-                  ancho: 153
+                SingleButton
+                  (
+                  "=",  solucionar,
+                  ancho: 153,
+                  colorFondo :0xAA000000
                 ),
-                Boton(
-                    simbolo:"0",
-                    funcion:click,
+                SingleButton
+                  (
+                    "0",
+                   click,
                 ),
-                Boton(
-                  simbolo:"*",
-                  funcion:click,
+                SingleButton
+                  (
+                  "*",  click,
                   colorFondo :0xDD000000,
                 ),
             ]
@@ -197,7 +217,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-class Boton extends StatelessWidget {
+class SingleButton
+    extends StatelessWidget {
   final String simbolo;
   final int colorFondo;
   final double ancho;
@@ -205,14 +226,13 @@ class Boton extends StatelessWidget {
   final int colorTxt;
   final Function funcion;
 
-  const Boton({
+  const SingleButton
+      (this.simbolo, this.funcion, {
     Key key,
-    this.simbolo,
     this.ancho=65,
     this.largo=65,
     this.colorFondo=0xFF000000,
     this.colorTxt=0xFF69F0AE,
-    this.funcion,
   }) :super(key: key);
 
   @override
