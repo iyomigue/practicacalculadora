@@ -45,26 +45,47 @@ class _MyHomePageState extends State<MyHomePage> {
       _ans='';
     });
   }
-  void solucionar(String expr){
-    Parser p = Parser();
-    Expression exp = p.parse(_expression);
-    ContextModel cm = ContextModel();
-    setState(() {
-        _ans = exp.evaluate(EvaluationType.REAL, cm).toString();
-        if(_ans.substring(_ans.length -2, _ans.length)==".0"){
-          _ans = _ans.substring(0, _ans.length-2);
-        }
-        _expression = '';
+  void aproximacion(String texto){
+    setState((){
+        _ans = aproxima(_ans);
     });
   }
-  @override
-  void initState() {
-  }
+  String aproxima(String numberToAprox) {
+    if (numberToAprox.length > 5 ){
+      if( int.parse(numberToAprox.substring(4,5)) > 5){
+        numberToAprox = numberToAprox.substring(0, 6);
+        double number= double.parse(numberToAprox) +0.0001;
+        numberToAprox = number.toString();
+      }
+      else {
+        numberToAprox = numberToAprox.substring(0, 6);
+        double number= double.parse(numberToAprox);
+        numberToAprox = number.toString();
+      }
+    }
+      return numberToAprox;
+    }
+
+    void solucionar(String expr) {
+      Parser p = Parser();
+      Expression exp = p.parse(_expression);
+      ContextModel cm = ContextModel();
+      setState(() {
+        _ans = exp.evaluate(EvaluationType.REAL, cm).toString();
+        if (_ans.substring(_ans.length - 2, _ans.length) == ".0") {
+          _ans = _ans.substring(0, _ans.length - 2);
+        }
+        _expression = '';
+      });
+    }
+    @override
+    void initState() {
+    }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         body: Container(
             padding: EdgeInsets.all(12),
             color: Colors.black,
@@ -101,9 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.black,
                 height: 100,
                 width: 300,
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child: FittedBox(
-                  alignment: Alignment.topRight,
+                  alignment: Alignment.center,
+                  child: SingleButton(
+                    "Aproximar", aproximacion, ancho:200, largo:50,
+                  )
                 )
             ),
             Row(
@@ -260,7 +284,7 @@ class SingleButton
             )
           )
         )
-      )
+      ),
     );
   }
 }
