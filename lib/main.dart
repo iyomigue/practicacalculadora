@@ -50,20 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
         _ans = aproxima(_ans);
     });
   }
-  String aproxima(String numberToAprox) {
-    if (numberToAprox.length > 5 ){
-      if( int.parse(numberToAprox.substring(4,5)) > 5){
-        numberToAprox = numberToAprox.substring(0, 6);
-        double number= double.parse(numberToAprox) +0.0001;
-        numberToAprox = number.toString();
-      }
-      else {
-        numberToAprox = numberToAprox.substring(0, 6);
-        double number= double.parse(numberToAprox);
-        numberToAprox = number.toString();
-      }
-    }
-      return numberToAprox;
+
+  String aproxima(String _ans) {
+
+      return _ans;
     }
 
     void solucionar(String expr) {
@@ -76,6 +66,20 @@ class _MyHomePageState extends State<MyHomePage> {
           _ans = _ans.substring(0, _ans.length - 2);
         }
         _expression = '';
+        if(withApproximation) {
+          if (_ans.length > 5) {
+            if (int.parse(_ans.substring(4, 5)) > 5) {
+              _ans = _ans.substring(0, 6);
+              double number = double.parse(_ans) + 0.0001;
+              _ans = number.toString();
+            }
+            else {
+              _ans = _ans.substring(0, 6);
+              double number = double.parse(_ans);
+              _ans = number.toString();
+            }
+          }
+        }
       });
     }
     @override
@@ -85,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final fondoNegroPeroMenos = Colors.black.withAlpha(20);
     return Scaffold(
         body: Container(
             padding: EdgeInsets.all(12),
@@ -125,9 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.center,
                 child: FittedBox(
                   alignment: Alignment.center,
-                  child: SingleButton(
-                    "Aproximar", aproximacion, ancho:200, largo:50,
-                  )
+                  child: buildApproxButton()
                 )
             ),
             Row(
@@ -139,15 +142,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SingleButton
               (
-              "C", clear, colorFondo :0xDD000000
+              "C", clear, colorFondo :fondoNegroPeroMenos
             ),
             SingleButton
               (
-              "(",  click, colorFondo :0xDD000000,
+              "(",  click, colorFondo :fondoNegroPeroMenos,
             ),
             SingleButton
               (
-              ")",  click, colorFondo :0xDD000000,
+              ")",  click, colorFondo :fondoNegroPeroMenos,
             )
             ],
             ),
@@ -168,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SingleButton
                   (
-                   "+", click, colorFondo :0xDD000000
+                   "+", click, colorFondo :fondoNegroPeroMenos
                 )
               ],
             ),
@@ -189,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SingleButton
                   (
-                   "-", click, colorFondo :0xDD000000
+                   "-", click, colorFondo :fondoNegroPeroMenos
                 )
               ],
             ),
@@ -210,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SingleButton
                   (
-                   "/",  click, colorFondo :0xDD000000
+                   "/",  click, colorFondo :fondoNegroPeroMenos
                 )
               ],
             ),
@@ -231,13 +234,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 SingleButton
                   (
                   "*",  click,
-                  colorFondo :0xDD000000,
+                  colorFondo :fondoNegroPeroMenos,
                 ),
             ]
             )
           ],
         )
       )
+    );
+  }
+
+  Widget buildApproxButton() {
+    if(withApproximation){
+      return SingleButton(
+        "Aproximar", aproximacion, ancho:200, largo:50, colorFondo: Colors.blue,
+      );
+    }
+    return SingleButton(
+      "Aproximar", aproximacion, ancho:200, largo:50, colorFondo: Colors.black.withAlpha(20),
     );
   }
 }
