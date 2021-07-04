@@ -5,23 +5,21 @@ import 'package:math_expressions/math_expressions.dart';
 import 'myhomepage.dart';
 
 part 'answerprompt_state.dart';
-
+//Despues de mil vueltas, creo que la cosa mas sencilla y util de implementar
+//pa entender los cubits es hacer que el prompt de respuesta cambie ligeramente
+//en funcion del estado del proceso, osea, unas caracteristicas pa cuando esta
+//vacio, pa cuando se escribe y pa cuando se soluciona.
 class Answerprompt extends Cubit<AnswerpromptState> {
-  Answerprompt() : super(AnswerpromptInitial());
-  void onApprox(){
-    //Aqui deberia llamar al getter del flag pa comprobar el estado pero nojepk
-    //dice que no encuentra _MyHomePageState.withApproximationGetter() :-(
-    //es pq es privada diosito?
-    if(withApproximation){
-      emit(state);
-    }
-    else
-      emit(state)
-  }
-  @override
-  void emit(AnswerpromptState state) {
-    // TODO: implement emit
-    super.emit(state);
+  final prompter_ans _prompter;
+
+  Answerprompt(this._prompter) : super(AnswerpromptIsEmpty());
+
+  Future<void> getExpression() async {
+      emit(AnswerpromptIsEmpty());
+      //Aqui habria que ver cuando se empieza a escribir, marronako
+      emit(AnswerpromptIsTyping());
+      //Aqui cuando se pulsa ans, doble marronako
+      emit(AnswerpromptSolved());
   }
 }
 
