@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void solucionar(String expr, BuildContext context) {
-    context.read<AnswerPromptCubit>().solved();
+
     Parser p = Parser();
     Expression exp = p.parse(_expression);
     ContextModel cm = ContextModel();
@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
     });
+    context.read<AnswerPromptCubit>().solved(_ans);
   }
 
   bool withApproximationGetter() {

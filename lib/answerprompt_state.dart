@@ -15,5 +15,5 @@ class AnswerpromptIsTyping extends AnswerpromptState {
 }
 
 class AnswerpromptSolved extends AnswerpromptState {
-  const AnswerpromptSolved(): super(textToPrompt: "Solucion");
+  const AnswerpromptSolved(String ans): super(textToPrompt: 'Solucion: $ans');
 }

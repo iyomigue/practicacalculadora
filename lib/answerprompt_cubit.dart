@@ -16,15 +16,14 @@ class AnswerPromptCubit extends Cubit<AnswerpromptState> {
       //Aqui habria que ver cuando se empieza a escribir, marronako
       emit(AnswerpromptIsTyping());
       //Aqui cuando se pulsa =, doble marronako
-      emit(AnswerpromptSolved());
   }
 
   void typing() {
     emit(AnswerpromptIsTyping());
   }
 
-  void solved() {
-    emit(AnswerpromptSolved());
+  void solved(String ans) {
+    emit(AnswerpromptSolved(ans));
   }
 }
 
