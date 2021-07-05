@@ -31,7 +31,7 @@ class SingleButton
           color: colorFondo,
           child: InkWell(
             onTap:(){
-              funcion(simbolo);
+              funcion(simbolo, context);
             },
             child: Center(
               child:Text(

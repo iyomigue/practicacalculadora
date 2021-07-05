@@ -11,9 +11,9 @@ class AnswerpromptIsEmpty extends AnswerpromptState {
 }
 
 class AnswerpromptIsTyping extends AnswerpromptState {
-  const AnswerpromptIsTyping();
+  const AnswerpromptIsTyping(): super(textToPrompt: "Typing");
 }
 
 class AnswerpromptSolved extends AnswerpromptState {
-  const AnswerpromptSolved();
+  const AnswerpromptSolved(): super(textToPrompt: "Solucion");
 }

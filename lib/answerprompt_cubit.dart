@@ -18,6 +18,14 @@ class AnswerPromptCubit extends Cubit<AnswerpromptState> {
       //Aqui cuando se pulsa =, doble marronako
       emit(AnswerpromptSolved());
   }
+
+  void typing() {
+    emit(AnswerpromptIsTyping());
+  }
+
+  void solved() {
+    emit(AnswerpromptSolved());
+  }
 }
 
 
