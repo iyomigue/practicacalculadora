@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'mywidgets.dart';
+import 'single_button.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'myhomepage.dart';
+import 'my_home_page.dart';
 
 void main() {
   runApp(Calculadora());

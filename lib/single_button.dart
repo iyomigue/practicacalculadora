@@ -48,35 +48,4 @@ class SingleButton
     );
   }
 }
-class prompter_ans extends StatelessWidget{
-  final String text2prompt;
 
-  const prompter_ans
-      (this.text2prompt);
-  @override
-  Widget build(BuildContext context) {
-    //
-    return Text(
-      text2prompt,
-      style: TextStyle(color: Colors.greenAccent, fontSize: 30),
-    );
-  }
-}
-
-class prompter_exp extends StatelessWidget{
-  final String exp2prompt;
-  Color colour =Colors.black;
-
-  const prompter_exp
-      (this.exp2prompt,{this.colour});
-
-  @override
-  Widget build(BuildContext context) {
-    //
-    return Text(
-      exp2prompt,
-      style: TextStyle(color: colour, fontSize:40),
-    );
-    throw UnimplementedError();
-
-}
