@@ -17,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _expression = '';
-  String _ans = '';
   bool _withApproximation = false;
 
   void click(String texto, BuildContext context) {
@@ -31,11 +30,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void allClear(String texto) {
+  void allClear(String texto, BuildContext context) {
     setState(() {
       _expression = '';
-      _ans = '';
     });
+    context.read<AnswerPromptCubit>().allClear();
   }
 
   void aproximacion(String texto) {
@@ -44,12 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  String aproxima(String _ans) {
-    return _ans;
-  }
-
   void solucionar(String expr, BuildContext context) {
-
+    String _ans = '';
     Parser p = Parser();
     Expression exp = p.parse(_expression);
     ContextModel cm = ContextModel();
