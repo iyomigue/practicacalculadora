@@ -2,10 +2,12 @@ part of 'answerprompt_cubit.dart';
 
 @immutable
 abstract class AnswerpromptState {
-  const AnswerpromptState();
+  final String textToPrompt;
+  const AnswerpromptState({this.textToPrompt="Empty"});
 }
 class AnswerpromptIsEmpty extends AnswerpromptState {
-  const AnswerpromptIsEmpty();
+
+  const AnswerpromptIsEmpty():super(textToPrompt: "Hola");
 }
 
 class AnswerpromptIsTyping extends AnswerpromptState {

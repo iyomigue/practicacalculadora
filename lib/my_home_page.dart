@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child:
                               BlocBuilder<AnswerPromptCubit, AnswerpromptState>(
                             builder: (context, state) {
-                              return PrompterAnswer(_ans);
+                              return PrompterAnswer(state.textToPrompt);
                             },
                           ),
                         ))),
