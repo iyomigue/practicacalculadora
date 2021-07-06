@@ -17,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _expression = '';
-  bool _withApproximation = false;
 
   void click(String texto, BuildContext context) {
     context.read<AnswerPromptCubit>().typing();
@@ -69,9 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
     context.read<AnswerPromptCubit>().solved(_ans);
   }
 
-  bool withApproximationGetter() {
-    return _withApproximation;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,10 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  //---------------------------------------------
-  //Esto lo quitas cuando añadas el getter y con la gracia de tus huevos
-  //consigas hacer un cubit
-  //---------------------------------------------
   Widget buildApproxButton(_withApproximation, BuildContext context) {
     if (_withApproximation) {
       return SingleButton(
@@ -197,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
       aproximacion,
       ancho: 200,
       largo: 50,
-      colorFondo: Colors.black.withAlpha(20),
+      colorFondo: Colors.black.withAlpha(100),
     );
   }
 }
