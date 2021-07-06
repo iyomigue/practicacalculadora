@@ -3,17 +3,27 @@ part of 'answerprompt_cubit.dart';
 @immutable
 abstract class AnswerpromptState {
   final String textToPrompt;
-  const AnswerpromptState({this.textToPrompt="Empty"});
-}
-class AnswerpromptIsEmpty extends AnswerpromptState {
+  final bool withApproximation;
 
-  const AnswerpromptIsEmpty():super(textToPrompt: "Hola");
+   AnswerpromptState({this.textToPrompt = "Empty", this.withApproximation = false});
+}
+
+class AnswerpromptIsEmpty extends AnswerpromptState {
+   AnswerpromptIsEmpty() : super(textToPrompt: "Hola");
 }
 
 class AnswerpromptIsTyping extends AnswerpromptState {
-  const AnswerpromptIsTyping(): super(textToPrompt: "Typing");
+  AnswerpromptIsTyping(AnswerpromptState state) : super(textToPrompt: "Typing", withApproximation: state.withApproximation);
 }
 
 class AnswerpromptSolved extends AnswerpromptState {
-  const AnswerpromptSolved(String ans): super(textToPrompt: 'Solucion: $ans');
+  AnswerpromptSolved(String ans, AnswerpromptState state) : super(textToPrompt: 'Solucion: $ans', withApproximation: state.withApproximation);
+}
+
+class ApproximationIsOn extends AnswerpromptState {
+  ApproximationIsOn(AnswerpromptState state): super(textToPrompt: state.textToPrompt, withApproximation: true);
+}
+
+class ApproximationIsOff extends AnswerpromptState {
+  ApproximationIsOff(AnswerpromptState state): super(textToPrompt: state.textToPrompt, withApproximation: false);
 }

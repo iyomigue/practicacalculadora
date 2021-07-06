@@ -10,7 +10,8 @@ class SingleButton
   final int colorTxt;
   final Function funcion;
 
-  const SingleButton
+  const
+  SingleButton
       (this.simbolo, this.funcion, {
     Key key,
     this.ancho=65,

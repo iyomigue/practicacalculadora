@@ -37,10 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
     context.read<AnswerPromptCubit>().allClear();
   }
 
-  void aproximacion(String texto) {
-    setState(() {
-      _withApproximation = !_withApproximation;
-    });
+  void aproximacion(String texto, BuildContext context) {
+    context.read<AnswerPromptCubit>().toggleApproximation();
   }
 
   void solucionar(String expr, BuildContext context) {
@@ -54,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _ans = _ans.substring(0, _ans.length - 2);
       }
       _expression = '';
-      if (_withApproximation) {
+      if (context.read<AnswerPromptCubit>().state.withApproximation) {
         if (_ans.length > 5) {
           if (int.parse(_ans.substring(4, 5)) > 5) {
             _ans = _ans.substring(0, 6);
@@ -112,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           alignment: Alignment.center,
                           child: FittedBox(
                               alignment: Alignment.center,
-                              child: buildApproxButton(_withApproximation))),
+                              child: buildApproxButton(state.withApproximation, context))),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
@@ -184,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Esto lo quitas cuando añadas el getter y con la gracia de tus huevos
   //consigas hacer un cubit
   //---------------------------------------------
-  Widget buildApproxButton(_withApproximation) {
+  Widget buildApproxButton(_withApproximation, BuildContext context) {
     if (_withApproximation) {
       return SingleButton(
         "Aproximar",
