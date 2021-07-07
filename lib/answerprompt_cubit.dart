@@ -12,8 +12,8 @@ class AnswerPromptCubit extends Cubit<AnswerpromptState> {
 
   AnswerPromptCubit() : super(AnswerpromptIsEmpty());
 
-  void typing() {
-    emit(AnswerpromptIsTyping(state));
+  void typing(String expression) {
+    emit(AnswerpromptIsTyping(state, expression));
   }
 
   void solved(String ans) {
@@ -23,15 +23,19 @@ class AnswerPromptCubit extends Cubit<AnswerpromptState> {
   void allClear() {
     emit(AnswerpromptIsEmpty());
   }
+  void clear(String expression){
+    emit(AnswerPromptCleared(state, expression));
+  }
 
-  void toggleApproximation() {
+  void toggleApproximation(String expression) {
     if (state.withApproximation) {
-      emit(ApproximationIsOff(state));
+      emit(ApproximationIsOff(state, expression));
     } else {
-      emit(ApproximationIsOn(state));
+      emit(ApproximationIsOn(state, expression));
     }
   }
 }
+
 
 
 
