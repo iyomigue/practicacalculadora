@@ -1,69 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practicacalculadora/answerprompt_cubit.dart';
 import 'package:practicacalculadora/prompter_answer.dart';
-import 'package:practicacalculadora/single_button.dart';
 import 'package:practicacalculadora/prompter_expression.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:practicacalculadora/single_button.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String _expression = '';
-  List<String> _history;
-
   void click(String texto, BuildContext context) {
-    _expression += texto;
-    context.read<AnswerPromptCubit>().typing(_expression);
+    context.read<AnswerPromptCubit>().typing(texto);
   }
 
   void clear(String texto, BuildContext context) {
-    _expression = '';
-    context.read<AnswerPromptCubit>().clear(_expression);
+    context.read<AnswerPromptCubit>().clear();
   }
 
   void allClear(String texto, BuildContext context) {
-    _expression = '';
     context.read<AnswerPromptCubit>().allClear();
   }
 
   void aproximacion(String texto, BuildContext context) {
-    context.read<AnswerPromptCubit>().toggleApproximation(_expression);
+    context.read<AnswerPromptCubit>().toggleApproximation();
   }
 
   void solucionar(String expr, BuildContext context) {
-    String _ans = '';
-    Parser p = Parser();
-    Expression exp = p.parse(_expression);
-    ContextModel cm = ContextModel();
-
-    _ans = exp.evaluate(EvaluationType.REAL, cm).toString();
-    if (_ans.substring(_ans.length - 2, _ans.length) == ".0") {
-      _ans = _ans.substring(0, _ans.length - 2);
-    }
-    _expression = '';
-    if (context.read<AnswerPromptCubit>().state.withApproximation) {
-      if (_ans.length > 5) {
-        if (int.parse(_ans.substring(4, 5)) > 5) {
-          _ans = _ans.substring(0, 6);
-          double number = double.parse(_ans) + 0.0001;
-          _ans = number.toString();
-        } else {
-          _ans = _ans.substring(0, 6);
-          double number = double.parse(_ans);
-          _ans = number.toString();
-        }
-      }
-    }
-
-    context.read<AnswerPromptCubit>().solved(_ans);
+    context.read<AnswerPromptCubit>().solve();
   }
 
   @override

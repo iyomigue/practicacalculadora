@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:meta/meta.dart';
 
 
@@ -12,26 +13,49 @@ class AnswerPromptCubit extends Cubit<AnswerpromptState> {
 
   AnswerPromptCubit() : super(AnswerpromptIsEmpty());
 
-  void typing(String expression) {
-    emit(AnswerpromptIsTyping(state, expression));
+  void typing(String texto) {
+    emit(AnswerpromptIsTyping(state, texto));
   }
 
-  void solved(String ans) {
-    emit(AnswerpromptSolved(ans, state));
+  void solve() {
+    String _ans = '';
+    Parser p = Parser();
+    Expression exp = p.parse(state.expression);
+    ContextModel cm = ContextModel();
+
+    _ans = exp.evaluate(EvaluationType.REAL, cm).toString();
+    if (_ans.substring(_ans.length - 2, _ans.length) == ".0") {
+      _ans = _ans.substring(0, _ans.length - 2);
+    }
+    if (state.withApproximation) {
+      if (_ans.length > 5) {
+        if (int.parse(_ans.substring(4, 5)) > 5) {
+          _ans = _ans.substring(0, 6);
+          double number = double.parse(_ans) + 0.0001;
+          _ans = number.toString();
+        } else {
+          _ans = _ans.substring(0, 6);
+          double number = double.parse(_ans);
+          _ans = number.toString();
+        }
+      }
+    }
+
+    emit(AnswerpromptSolved(_ans, state));
   }
 
   void allClear() {
     emit(AnswerpromptIsEmpty());
   }
-  void clear(String expression){
-    emit(AnswerPromptCleared(state, expression));
+  void clear(){
+    emit(AnswerPromptCleared(state));
   }
 
-  void toggleApproximation(String expression) {
+  void toggleApproximation() {
     if (state.withApproximation) {
-      emit(ApproximationIsOff(state, expression));
+      emit(ApproximationIsOff(state));
     } else {
-      emit(ApproximationIsOn(state, expression));
+      emit(ApproximationIsOn(state));
     }
   }
 }

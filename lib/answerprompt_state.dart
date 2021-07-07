@@ -15,7 +15,7 @@ class AnswerpromptIsEmpty extends AnswerpromptState {
 }
 
 class AnswerpromptIsTyping extends AnswerpromptState {
-  AnswerpromptIsTyping(AnswerpromptState state, String expression) : super(textToPrompt: "Typing", withApproximation: state.withApproximation, expression: expression);
+  AnswerpromptIsTyping(AnswerpromptState state, String texto) : super(textToPrompt: "Typing", withApproximation: state.withApproximation, expression: state.expression+texto);
 }
 
 class AnswerpromptSolved extends AnswerpromptState {
@@ -23,13 +23,13 @@ class AnswerpromptSolved extends AnswerpromptState {
 }
 
 class ApproximationIsOn extends AnswerpromptState {
-  ApproximationIsOn(AnswerpromptState state, String expression) : super(textToPrompt: state.textToPrompt, withApproximation: true, expression: expression);
+  ApproximationIsOn(AnswerpromptState state) : super(textToPrompt: state.textToPrompt, withApproximation: true, expression: state.expression);
 }
 
 class ApproximationIsOff extends AnswerpromptState {
-  ApproximationIsOff(AnswerpromptState state, String expression) : super(textToPrompt: state.textToPrompt, withApproximation: false, expression: expression);
+  ApproximationIsOff(AnswerpromptState state) : super(textToPrompt: state.textToPrompt, withApproximation: false, expression: state.expression);
 }
 
 class AnswerPromptCleared extends AnswerpromptState{
-  AnswerPromptCleared(AnswerpromptState state, String expression):super(textToPrompt: 'Limpiado', expression: '', withApproximation: state.withApproximation);
+  AnswerPromptCleared(AnswerpromptState state):super(textToPrompt: 'Limpiado', expression: '', withApproximation: state.withApproximation);
 }
